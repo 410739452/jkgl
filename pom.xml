@@ -26,6 +26,7 @@
 		<mybatis-plus-boot-starter.version>3.0-RC2</mybatis-plus-boot-starter.version>
 		<fastjson.version>1.2.9</fastjson.version>
 		<swagger.version>2.9.2</swagger.version>
+		<shiro.version>1.4.0-RC2</shiro.version>
 	</properties>
 
 	<dependencies>
@@ -72,6 +73,14 @@
 			<version>${fastjson.version}</version>
 		</dependency>
 		
+		<!-- shiro begin -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<!-- shiro end -->
+
 		<!-- swagger begin -->
 		<dependency>
 			<groupId>io.springfox</groupId>
