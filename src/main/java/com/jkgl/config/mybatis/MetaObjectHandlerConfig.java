@@ -28,7 +28,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 		setFieldValByName(User.UPDATE_USER, "PF", metaObject);
 		setFieldValByName(User.UPDATE_TIME, new Timestamp(new Date().getTime()), metaObject);
 
-		setFieldValByName(User.DELETED, 0, metaObject);
+		setFieldValByName(User.STATUS, 0, metaObject);
 
 	}
 

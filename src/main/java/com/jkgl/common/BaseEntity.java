@@ -56,7 +56,7 @@ public class BaseEntity<T extends Model<T>> extends Model<T> {
 	 */
 	@TableLogic
 	@TableField(fill = FieldFill.INSERT)
-	private Integer deleted;
+	private Integer status;
 	
 	/**
 	 * 使用 ActiveRecord 方式必须加上此方法
