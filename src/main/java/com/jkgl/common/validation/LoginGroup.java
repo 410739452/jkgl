@@ -9,6 +9,6 @@ package com.jkgl.common.validation;
  * @author PF
  *
  */
-public interface AddGroup {
+public interface LoginGroup {
 
 }
