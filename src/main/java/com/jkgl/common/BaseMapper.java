@@ -8,8 +8,8 @@ package com.jkgl.common;
  *
  * @author PF
  *
- * @param <T> 指定Entity的类型
+ * @param <E> 指定Entity的类型
  */
-public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
+public interface BaseMapper<E> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<E> {
 
 }

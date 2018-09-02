@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -15,34 +18,46 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 
  * <p>
- * 全局异常处理
+ * Controller异常处理
  * </p>
  *
  * @author PF
  *
  */
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class RestControllerExceptionHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(RestControllerExceptionHandler.class);
 
-	/**
-	 * 处理REST异常
-	 * 
-	 * @param e
-	 * @return
-	 */
+    @ExceptionHandler(ShiroException.class)
+    public RestResult<Object> handleShiroException(ShiroException e) {
+		logger.error("Error: handleShiroException StackTrace : {}", e);
+		return RestResult.fail(e.getMessage());
+    }
+    
+    @ExceptionHandler(value = UnauthenticatedException.class)
+    public RestResult<Object> handleUnauthenticatedException(UnauthenticatedException e) {
+    	logger.error("Error: handleUnauthenticatedException StackTrace : {}", e);
+    	return RestResult.fail("没有认证");
+    }
+    
+	@ExceptionHandler(value = AuthenticationException.class)
+	public RestResult<Object> handleAuthenticationException(AuthenticationException e) {
+		logger.error("Error: handleAuthenticationException StackTrace : {}", e);
+		return RestResult.fail(e.getMessage());
+	}   
+	
 	@ExceptionHandler(value = RestException.class)
 	public RestResult<Object> handleRestException(RestException e) {
-		RestErrorCode errorCode = e.getErrorCode();
+		RestResultCode errorCode = e.getErrorCode();
 		if (null != errorCode) {
 			logger.debug("Rest request error, {}", errorCode.toString());
-			return RestResult.failed(errorCode);
+			return RestResult.fail(errorCode);
 		}
 		logger.debug("Rest request error, {}", e.getMessage());
-		return RestResult.failed(e.getMessage());
+		return RestResult.fail(e.getMessage());
 	}
-
+	
 	/**
 	 * 处理参数校验异常
 	 * 
@@ -61,9 +76,9 @@ public class GlobalExceptionHandler {
 				jsonList.add(jsonObject);
 			});
 		}
-		return RestResult.restResult(jsonList, RestErrorCode.FAILED);
+		return RestResult.restResult(jsonList, RestResultCode.FAILED);
 	}
-
+	
 	/**
 	 * 默认异常
 	 * 
@@ -71,8 +86,8 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
 	@ExceptionHandler(value = Exception.class)
-	public RestResult<Object> handleBadRequest(Exception e) {
-		logger.error("Error: handleBadRequest StackTrace : {}", e);
-		return RestResult.failed(RestErrorCode.FAILED);
+	public RestResult<Object> handleException(Exception e) {
+		logger.error("Error: handleException StackTrace : {}", e);
+		return RestResult.fail(e.getMessage());
 	}
 }

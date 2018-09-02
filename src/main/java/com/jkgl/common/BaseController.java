@@ -16,41 +16,24 @@ public class BaseController {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /**
-     * <p>
-     * 请求成功
-     * </p>
-     *
-     * @param data 数据内容
-     * @param <T>  对象泛型
-     * @return
-     */
+    protected <T> RestResult<T> success() {
+    	return RestResult.restResult(null, RestResultCode.SUCCESS);
+    }
+    
     protected <T> RestResult<T> success(T data) {
-        return RestResult.ok(data);
+        return RestResult.success(data);
+    }
+    
+	protected <T> RestResult<T> fail() {
+		return RestResult.fail(RestResultCode.FAILED);
+	}
+
+    protected <T> RestResult<T> fail(String msg) {
+        return RestResult.fail(msg);
     }
 
-    /**
-     * <p>
-     * 请求失败
-     * </p>
-     *
-     * @param msg 提示内容
-     * @return
-     */
-    protected RestResult<Object> failed(String msg) {
-        return RestResult.failed(msg);
-    }
-
-    /**
-     * <p>
-     * 请求失败
-     * </p>
-     *
-     * @param errorCode 请求错误码
-     * @return
-     */
-    protected RestResult<Object> failed(RestErrorCode errorCode) {
-        return RestResult.failed(errorCode);
+    protected <T> RestResult<T> fail(RestResultCode errorCode) {
+        return RestResult.fail(errorCode);
     }	
-	
+
 }

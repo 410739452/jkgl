@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.core.enums.IEnum;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import lombok.Data;
@@ -27,12 +28,11 @@ import lombok.experimental.FieldNameConstants;
 @EqualsAndHashCode(callSuper=false)
 @Accessors(chain = true)
 @FieldNameConstants
-public class BaseEntity<T extends Model<T>> extends Model<T> {
+public class BaseEntity<E extends Model<E>> extends Model<E> {
 	
 	private static final long serialVersionUID = -5054828250422001743L;
 
 	@TableId("id")
-//	@TableField(fill = FieldFill.INSERT)
 	private String id;
 	
 	/**
@@ -56,7 +56,7 @@ public class BaseEntity<T extends Model<T>> extends Model<T> {
 	 */
 	@TableLogic
 	@TableField(fill = FieldFill.INSERT)
-	private Integer status;
+	private StatusEnum status;
 	
 	/**
 	 * 使用 ActiveRecord 方式必须加上此方法
@@ -64,5 +64,32 @@ public class BaseEntity<T extends Model<T>> extends Model<T> {
 	@Override
 	protected Serializable pkVal() {
 		return id;
+	}
+
+	
+	
+	public enum StatusEnum implements IEnum<Integer> {
+		NORMAL(0, "正常"), 
+		DELETED(1, "已删除"), 
+		LOCKED(2, "已锁定"),
+		;
+
+		private int value;
+		private String desc;
+
+		StatusEnum(final int value, final String desc) {
+			this.value = value;
+			this.desc = desc;
+		}
+
+		@Override
+		public Integer getValue() {
+			return this.value;
+		}
+		
+		public String getDesc() {
+			return this.desc;
+		}
+
 	}
 }

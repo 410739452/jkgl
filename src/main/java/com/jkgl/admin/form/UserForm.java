@@ -2,9 +2,7 @@ package com.jkgl.admin.form;
 
 import javax.validation.constraints.NotBlank;
 
-import com.jkgl.common.validation.AddGroup;
-import com.jkgl.common.validation.LoginGroup;
-import com.jkgl.common.validation.UpdateGroup;
+import com.jkgl.common.ValidationGroups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,10 +17,10 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class UserForm {
 
-	@NotBlank(message = "用户名不能为空", groups = { LoginGroup.class, AddGroup.class })
+	@NotBlank(message = "用户名不能为空", groups = { ValidationGroups.Login.class, ValidationGroups.Add.class })
 	private String username;
 
-	@NotBlank(message = "密码不能为空", groups = { LoginGroup.class, AddGroup.class, UpdateGroup.class })
+	@NotBlank(message = "密码不能为空", groups = { ValidationGroups.Login.class, ValidationGroups.Add.class, ValidationGroups.Update.class })
 	private String password;
 
 }

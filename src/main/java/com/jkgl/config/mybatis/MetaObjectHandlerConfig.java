@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.jkgl.admin.entity.User;
+import com.jkgl.common.BaseEntity;
 
 @Component
 public class MetaObjectHandlerConfig implements MetaObjectHandler {
@@ -28,7 +29,8 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 		setFieldValByName(User.UPDATE_USER, "PF", metaObject);
 		setFieldValByName(User.UPDATE_TIME, new Timestamp(new Date().getTime()), metaObject);
 
-		setFieldValByName(User.STATUS, 0, metaObject);
+		
+		setFieldValByName(User.STATUS, BaseEntity.StatusEnum.NORMAL, metaObject);
 
 	}
 

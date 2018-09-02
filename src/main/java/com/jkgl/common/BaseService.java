@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *
  * @author PF
  *
- * @param <T> Entity的类型
+ * @param <E> Entity的类型
  */
-public interface BaseService<T> extends IService<T> {
+public interface BaseService<E> extends IService<E> {
 
 }

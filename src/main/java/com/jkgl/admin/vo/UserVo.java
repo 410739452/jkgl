@@ -14,6 +14,5 @@ import lombok.experimental.FieldNameConstants;
 public class UserVo {
 	private String id;
 	private String username;
-	private String password;
 
 }

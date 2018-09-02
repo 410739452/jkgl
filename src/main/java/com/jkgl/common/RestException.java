@@ -16,9 +16,9 @@ public class RestException extends RuntimeException {
 	/**
 	 * 错误码
 	 */
-	private RestErrorCode errorCode;
+	private RestResultCode errorCode;
 
-	public RestException(RestErrorCode errorCode) {
+	public RestException(RestResultCode errorCode) {
 		super(errorCode.getMsg());
 		this.errorCode = errorCode;
 	}
@@ -35,7 +35,7 @@ public class RestException extends RuntimeException {
 		super(cause);
 	}
 
-	public RestErrorCode getErrorCode() {
+	public RestResultCode getErrorCode() {
 		return errorCode;
 	}
 

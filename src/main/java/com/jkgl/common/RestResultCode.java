@@ -9,31 +9,23 @@ package com.jkgl.common;
  * @author PF
  *
  */
-public enum RestErrorCode {
-	/**
-	 * 失败
-	 */
-	FAILED("1", "失败"),
-	
-	/**
-	 * 成功
-	 */
+public enum RestResultCode {
 	SUCCESS("0", "成功"),
-	
+	FAILED("1", "失败"),
 	;
 	
 
 	private final String code;
 	private final String msg;
 
-	RestErrorCode(final String code, final String msg) {
+	RestResultCode(final String code, final String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-	public static RestErrorCode fromCode(String code) {
-		RestErrorCode[] ecs = RestErrorCode.values();
-		for (RestErrorCode ec : ecs) {
+	public static RestResultCode fromCode(String code) {
+		RestResultCode[] ecs = RestResultCode.values();
+		for (RestResultCode ec : ecs) {
 			if (ec.getCode().equalsIgnoreCase(code)) {
 				return ec;
 			}

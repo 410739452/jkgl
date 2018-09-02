@@ -23,5 +23,6 @@ public class User extends BaseEntity<User> {
 
 	private String username;
 	private String password;
+	private String salt;
 
 }
