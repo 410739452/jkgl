@@ -29,21 +29,19 @@ public class RestControllerExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(RestControllerExceptionHandler.class);
 
-    @ExceptionHandler(ShiroException.class)
-    public RestResult<Object> handleShiroException(ShiroException e) {
-		logger.error("Error: handleShiroException StackTrace : {}", e);
-		return RestResult.fail(e.getMessage());
-    }
-    
+	
     @ExceptionHandler(value = UnauthenticatedException.class)
     public RestResult<Object> handleUnauthenticatedException(UnauthenticatedException e) {
-    	logger.error("Error: handleUnauthenticatedException StackTrace : {}", e);
-    	return RestResult.fail("没有认证");
+    	return RestResult.fail(RestResultCode.UNAUTHORIZED);
+    }
+	
+	@ExceptionHandler(ShiroException.class)
+    public RestResult<Object> handleShiroException(ShiroException e) {
+		return RestResult.fail(e.getMessage());
     }
     
 	@ExceptionHandler(value = AuthenticationException.class)
 	public RestResult<Object> handleAuthenticationException(AuthenticationException e) {
-		logger.error("Error: handleAuthenticationException StackTrace : {}", e);
 		return RestResult.fail(e.getMessage());
 	}   
 	

@@ -38,16 +38,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 	}
 
 	/**
-	 * 判断用户是否想要登入。 检测 header 里面是否包含 Token 字段
-	 */
-	@Override
-	protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-		HttpServletRequest req = (HttpServletRequest) request;
-		String token = req.getHeader("Token");
-		return token != null;
-	}
-
-	/**
 	 * 执行登陆操作
 	 */
 	@Override
@@ -60,11 +50,21 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 		// 如果没有抛出异常则代表登入成功，返回true
 		return true;
 	}
+	
+	/**
+	 * 判断用户是否想要登入。 检测 header 里面是否包含 Token 字段
+	 */
+	@Override
+	protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+		HttpServletRequest req = (HttpServletRequest) request;
+		String token = req.getHeader("Token");
+		return token != null;
+	}	
 
     private void responseError(ServletRequest req, ServletResponse resp) {
         try {
             HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/unauthorized");
+            httpServletResponse.sendRedirect("/sys/unauthorized");
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

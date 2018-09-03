@@ -3,7 +3,6 @@ package com.jkgl.config.shiro;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,9 +14,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jkgl.admin.entity.User;
 import com.jkgl.admin.service.UserService;
+import com.jkgl.common.RestResultCode;
 import com.jkgl.util.JwtUtil;
 
 @Component
@@ -43,16 +42,16 @@ public class MyRealm extends AuthorizingRealm {
 
 		String userid = JwtUtil.getUserid(token);
 		if (userid == null) {
-			throw new AuthenticationException("非法的Token");
+			throw new AuthenticationException(RestResultCode.TOKEN_INVALID.getMsg());
 		}
 
 		User user = userService.getById(userid);
 		if (user == null) {
-			throw new AuthenticationException("用户不存在");
+			throw new AuthenticationException(RestResultCode.USER_NOT_EXISTED.getMsg());
 		}
 
 		if (!JwtUtil.verify(token, userid, user.getPassword())) {
-			throw new AuthenticationException("用户名或密码不正确");
+			throw new AuthenticationException(RestResultCode.USERNAME_OR_PASSWORD_ERROR.getMsg());
 		}
 
 		return new SimpleAuthenticationInfo(token, token, getName());
@@ -63,8 +62,8 @@ public class MyRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String username = (String) SecurityUtils.getSubject().getPrincipal();
-		User user = userService.getOne(new QueryWrapper<User>().eq(User.USERNAME, username));
+//		String userid = JwtUtil.getUserid(principals.toString());
+//		User user = userService.getById(userid);
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 

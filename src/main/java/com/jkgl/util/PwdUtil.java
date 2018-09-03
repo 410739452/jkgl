@@ -1,7 +1,6 @@
 package com.jkgl.util;
 
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 
 public class PwdUtil {
